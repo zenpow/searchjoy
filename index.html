@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Intel - Search Analytics Made Easy</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="github.css">
+    <style>
+      body {
+        padding-bottom: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+      }
+
+      h2, h3, h4 {
+        margin-top: 1em;
+      }
+
+      p {
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+      }
+
+      p.lead {
+        margin-top: 0;
+      }
+    </style>
+
+    <meta property="og:title" content="Intel"/>
+    <meta property="og:url" content="http://ankane.github.io/intel/"/>
+    <meta property="og:image" content="https://github.global.ssl.fastly.net/images/gravatars/gravatar-user-420.png"/>
+    <meta property="og:description" content="Search analytics made easy"/>
+
+  </head>
+  <body>
+    <a href="https://github.com/ankane/intel" style="position: fixed; top: 15px; right: 15px; border: 0; z-index: 1000;" class="btn btn-info">Github</a>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h1 style="margin-bottom: 0.5em; margin-top: 15px;">Intel</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="lead"><img class="emoji" title=":rocket:" alt=":rocket:" src="https://github.global.ssl.fastly.net/images/icons/emoji/rocket.png" height="20" width="20" align="absmiddle"> Search analytics made easy</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <hr style="margin-top: 0;" />
+
+<!-- begin readme -->
+
+<p><a href="http://intel-demo.herokuapp.com/">View demo</a></p>
+
+<ul>
+<li>track searches and conversions week over week</li>
+<li>watch users search in real-time</li>
+<li>monitor the performance of top searches</li>
+</ul><p><img class="emoji" title=":cupid:" alt=":cupid:" src="https://github.global.ssl.fastly.net/images/icons/emoji/cupid.png" height="20" width="20" align="absmiddle"> An amazing companion to <a href="https://github.com/ankane/searchkick">Searchkick</a></p>
+
+<p>Works with Rails 3.1 or greater</p>
+
+<h2>
+<a name="get-started" class="anchor" href="#get-started"><span class="octicon octicon-link"></span></a>Get Started</h2>
+
+<p>Add this line to your application’s Gemfile:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s2">"intel"</span>
+</pre></div>
+
+<p>And run the generator. This creates a migration for a table to keep track of searches.</p>
+
+<div class="highlight highlight-sh"><pre>rails generate intel:install
+rake db:migrate
+</pre></div>
+
+<h2>
+<a name="track-searches" class="anchor" href="#track-searches"><span class="octicon octicon-link"></span></a>Track Searches</h2>
+
+<p>With Searchkick, use the <code>track</code> option.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="no">Item</span><span class="o">.</span><span class="n">search</span> <span class="s2">"apple"</span><span class="p">,</span> <span class="ss">track</span><span class="p">:</span> <span class="kp">true</span>
+</pre></div>
+
+<p>Want to track more attributes? Use migrations to add them to the <code>searches</code> table. Then, pass the values to the <code>track</code> option.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="no">Item</span><span class="o">.</span><span class="n">search</span> <span class="s2">"apple"</span><span class="p">,</span> <span class="ss">track</span><span class="p">:</span> <span class="p">{</span><span class="n">user_id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">source</span><span class="p">:</span> <span class="s2">"web"</span><span class="p">}</span>
+</pre></div>
+
+<p>It’s that easy!</p>
+
+<p>Without Searchkick, create searches manually.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="ss">Intel</span><span class="p">:</span><span class="ss">:Search</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+  <span class="n">search_type</span><span class="p">:</span> <span class="s2">"Item"</span><span class="p">,</span> <span class="c1"># typically the model name</span>
+  <span class="ss">query</span><span class="p">:</span> <span class="s2">"apple"</span><span class="p">,</span>
+  <span class="n">results_count</span><span class="p">:</span> <span class="mi">12</span>
+<span class="p">)</span>
+</pre></div>
+
+<h2>
+<a name="track-conversions" class="anchor" href="#track-conversions"><span class="octicon octicon-link"></span></a>Track Conversions</h2>
+
+<p>Tracking conversions is super important.</p>
+
+<p>First, define your conversion metric. This is specific to your application.</p>
+
+<p>Next, when a user searches, keep track of the search id.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="vi">@items</span> <span class="o">=</span> <span class="no">Item</span><span class="o">.</span><span class="n">search</span> <span class="s2">"apple"</span><span class="p">,</span> <span class="ss">track</span><span class="p">:</span> <span class="kp">true</span>
+<span class="vi">@items</span><span class="o">.</span><span class="n">search</span><span class="o">.</span><span class="n">id</span> <span class="c1"># returns search id</span>
+</pre></div>
+
+<p>When a user converts, mark it.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="n">search</span> <span class="o">=</span> <span class="ss">Intel</span><span class="p">:</span><span class="ss">:Search</span><span class="o">.</span><span class="n">find</span> <span class="n">params</span><span class="o">[</span><span class="ss">:search_id</span><span class="o">]</span>
+<span class="n">search</span><span class="o">.</span><span class="n">converted_at</span> <span class="o">=</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span>
+<span class="n">search</span><span class="o">.</span><span class="n">save</span>
+</pre></div>
+
+<p>Better yet, record the result that converted.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="n">item</span> <span class="o">=</span> <span class="no">Item</span><span class="o">.</span><span class="n">find</span> <span class="n">params</span><span class="o">[</span><span class="ss">:item_id</span><span class="o">]</span>
+<span class="n">search</span><span class="o">.</span><span class="n">convertable</span> <span class="o">=</span> <span class="n">item</span>
+<span class="n">search</span><span class="o">.</span><span class="n">save</span>
+</pre></div>
+
+<p>The item will appear in the live stream. Add the <code>intel_name</code> method to your model to change what is displayed.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">Item</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+  <span class="k">def</span> <span class="nf">intel_name</span>
+    <span class="n">title</span> <span class="c1"># use the title method</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<h2>
+<a name="view-the-data" class="anchor" href="#view-the-data"><span class="octicon octicon-link"></span></a>View the Data</h2>
+
+<p>Add the dashboards to your <code>config/routes.rb</code>.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="n">mount</span> <span class="ss">Intel</span><span class="p">:</span><span class="ss">:Engine</span><span class="p">,</span> <span class="ss">at</span><span class="p">:</span> <span class="s2">"admin/intel"</span>
+</pre></div>
+
+<p>Be sure to protect the endpoint in production.</p>
+
+<h4>
+<a name="basic-authentication" class="anchor" href="#basic-authentication"><span class="octicon octicon-link"></span></a>Basic Authentication</h4>
+
+<p>Set the following variables in your environment or an initializer.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="no">ENV</span><span class="o">[</span><span class="s2">"INTEL_USERNAME"</span><span class="o">]</span> <span class="o">=</span> <span class="s2">"andrew"</span>
+<span class="no">ENV</span><span class="o">[</span><span class="s2">"INTEL_PASSWORD"</span><span class="o">]</span> <span class="o">=</span> <span class="s2">"secret"</span>
+</pre></div>
+
+<h4>
+<a name="devise" class="anchor" href="#devise"><span class="octicon octicon-link"></span></a>Devise</h4>
+
+<div class="highlight highlight-ruby"><pre><span class="n">authenticate</span> <span class="ss">:user</span><span class="p">,</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">user</span><span class="o">|</span> <span class="n">user</span><span class="o">.</span><span class="n">admin?</span> <span class="p">}</span> <span class="k">do</span>
+  <span class="n">mount</span> <span class="ss">Intel</span><span class="p">:</span><span class="ss">:Engine</span><span class="p">,</span> <span class="ss">at</span><span class="p">:</span> <span class="s2">"admin/intel"</span>
+<span class="k">end</span>
+</pre></div>
+
+<h2>
+<a name="customize" class="anchor" href="#customize"><span class="octicon octicon-link"></span></a>Customize</h2>
+
+<h4>
+<a name="time-zone-coming-soon" class="anchor" href="#time-zone-coming-soon"><span class="octicon octicon-link"></span></a>Time Zone [coming soon]</h4>
+
+<p>By default, Intel uses <code>Time.zone</code>. To set a specific zone, create an initializer <code>config/initializers/intel.rb</code> with:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="no">Intel</span><span class="o">.</span><span class="n">default_time_zone</span> <span class="o">=</span> <span class="s2">"Pacific Time (US &amp; Canada)"</span>
+</pre></div>
+
+<h4>
+<a name="top-searches-coming-soon" class="anchor" href="#top-searches-coming-soon"><span class="octicon octicon-link"></span></a>Top Searches [coming soon]</h4>
+
+<p>By default, Intel uses the top 100 searches for low conversions.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="no">Intel</span><span class="o">.</span><span class="n">top_count</span> <span class="o">=</span> <span class="mi">200</span>
+</pre></div>
+
+<h4>
+<a name="views-coming-soon" class="anchor" href="#views-coming-soon"><span class="octicon octicon-link"></span></a>Views [coming soon]</h4>
+
+<p>Add the controllers and views to your app and customize away.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="n">rails</span> <span class="n">generate</span> <span class="ss">intel</span><span class="p">:</span><span class="n">engine</span>
+</pre></div>
+
+<h2>
+<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>Everyone is encouraged to help improve this project. Here are a few ways you can help:</p>
+
+<ul>
+<li><a href="https://github.com/ankane/intel/issues">Report bugs</a></li>
+<li>Fix bugs and <a href="https://github.com/ankane/intel/pulls">submit pull requests</a>
+</li>
+<li>Write, clarify, or fix documentation</li>
+<li>Suggest or add new feature</li>
+</ul>
+
+<!-- end readme -->
+
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-39027070-7', 'ankane.github.io');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>
