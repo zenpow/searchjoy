@@ -121,16 +121,16 @@ rake db:migrate
 
 <p>Next, when a user searches, keep track of the search id. With Searchkick, you can get the id with <code>@results.search.id</code>.</p>
 
-<p>When a user converts, find the record and call <code>converted</code>.</p>
+<p>When a user converts, find the record and call <code>convert</code>.</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">search</span> <span class="o">=</span> <span class="ss">Intel</span><span class="p">:</span><span class="ss">:Search</span><span class="o">.</span><span class="n">find</span> <span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span>
-<span class="n">search</span><span class="o">.</span><span class="n">converted</span>
+<span class="n">search</span><span class="o">.</span><span class="n">convert</span>
 </pre></div>
 
 <p>Better yet, record the model that converted.</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">item</span> <span class="o">=</span> <span class="no">Item</span><span class="o">.</span><span class="n">find</span> <span class="n">params</span><span class="o">[</span><span class="ss">:item_id</span><span class="o">]</span>
-<span class="n">search</span><span class="o">.</span><span class="n">converted</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="n">search</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 </pre></div>
 
 <h3>
