@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Intel - Search Analytics Made Easy</title>
+    <title>Searchjoy - Search Analytics Made Easy</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
@@ -29,19 +29,19 @@
       }
     </style>
 
-    <meta property="og:title" content="Intel"/>
-    <meta property="og:url" content="http://ankane.github.io/intel/"/>
+    <meta property="og:title" content="Searchjoy"/>
+    <meta property="og:url" content="http://ankane.github.io/searchjoy/"/>
     <meta property="og:image" content="https://github.global.ssl.fastly.net/images/gravatars/gravatar-user-420.png"/>
     <meta property="og:description" content="Search analytics made easy"/>
 
   </head>
   <body>
-    <a href="https://github.com/ankane/intel" style="position: fixed; top: 15px; right: 15px; border: 0; z-index: 1000;" class="btn btn-info">Github</a>
+    <a href="https://github.com/ankane/searchjoy" style="position: fixed; top: 15px; right: 15px; border: 0; z-index: 1000;" class="btn btn-info">Github</a>
 
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
-          <h1 style="margin-bottom: 0.5em; margin-top: 15px;">Intel</h1>
+          <h1 style="margin-bottom: 0.5em; margin-top: 15px;">Searchjoy</h1>
         </div>
       </div>
       <div class="row">
@@ -59,7 +59,7 @@
 
 <!-- begin readme -->
 
-<p><a href="http://intel-demo.herokuapp.com/" class="btn btn-success btn-lg">See it in action</a></p>
+<p><a href="http://searchjoy.herokuapp.com/" class="btn btn-success btn-lg">See it in action</a></p>
 
 <ul>
 <li>view searches in real-time</li>
@@ -74,18 +74,18 @@
 
 <p>Add this line to your application’s Gemfile:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s2">"intel"</span>
+<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s2">"searchjoy"</span>
 </pre></div>
 
 <p>And run the generator. This creates a migration to store searches.</p>
 
-<div class="highlight highlight-sh"><pre>rails generate intel:install
+<div class="highlight highlight-sh"><pre>rails generate searchjoy:install
 rake db:migrate
 </pre></div>
 
 <p>Next, add the dashboard to your <code>config/routes.rb</code>.</p>
 
-<div class="highlight highlight-ruby"><pre><span class="n">mount</span> <span class="ss">Intel</span><span class="p">:</span><span class="ss">:Engine</span><span class="p">,</span> <span class="ss">at</span><span class="p">:</span> <span class="s2">"admin/intel"</span>
+<div class="highlight highlight-ruby"><pre><span class="n">mount</span> <span class="ss">Searchjoy</span><span class="p">:</span><span class="ss">:Engine</span><span class="p">,</span> <span class="ss">at</span><span class="p">:</span> <span class="s2">"admin/searchjoy"</span>
 </pre></div>
 
 <p>Be sure to protect the endpoint in production - see the <a href="#authentication">Authentication</a> section for ways to do this.</p>
@@ -95,7 +95,7 @@ rake db:migrate
 
 <p>Track searches by creating a record in the database.</p>
 
-<div class="highlight highlight-ruby"><pre><span class="ss">Intel</span><span class="p">:</span><span class="ss">:Search</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+<div class="highlight highlight-ruby"><pre><span class="ss">Searchjoy</span><span class="p">:</span><span class="ss">:Search</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
   <span class="n">search_type</span><span class="p">:</span> <span class="s2">"Item"</span><span class="p">,</span> <span class="c1"># typically the model name</span>
   <span class="ss">query</span><span class="p">:</span> <span class="s2">"apple"</span><span class="p">,</span>
   <span class="n">results_count</span><span class="p">:</span> <span class="mi">12</span>
@@ -107,7 +107,7 @@ rake db:migrate
 <div class="highlight highlight-ruby"><pre><span class="no">Item</span><span class="o">.</span><span class="n">search</span> <span class="s2">"apple"</span><span class="p">,</span> <span class="ss">track</span><span class="p">:</span> <span class="kp">true</span>
 </pre></div>
 
-<p>If you want to track more attributes, add them to the <code>intel_searches</code> table.  Then, pass the values to the <code>track</code> option.</p>
+<p>If you want to track more attributes, add them to the <code>searchjoy_searches</code> table.  Then, pass the values to the <code>track</code> option.</p>
 
 <div class="highlight highlight-ruby"><pre><span class="no">Item</span><span class="o">.</span><span class="n">search</span> <span class="s2">"apple"</span><span class="p">,</span> <span class="ss">track</span><span class="p">:</span> <span class="p">{</span><span class="n">user_id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">source</span><span class="p">:</span> <span class="s2">"web"</span><span class="p">}</span>
 </pre></div>
@@ -123,7 +123,7 @@ rake db:migrate
 
 <p>When a user converts, find the record and call <code>convert</code>.</p>
 
-<div class="highlight highlight-ruby"><pre><span class="n">search</span> <span class="o">=</span> <span class="ss">Intel</span><span class="p">:</span><span class="ss">:Search</span><span class="o">.</span><span class="n">find</span> <span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span>
+<div class="highlight highlight-ruby"><pre><span class="n">search</span> <span class="o">=</span> <span class="ss">Searchjoy</span><span class="p">:</span><span class="ss">:Search</span><span class="o">.</span><span class="n">find</span> <span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span>
 <span class="n">search</span><span class="o">.</span><span class="n">convert</span>
 </pre></div>
 
@@ -143,15 +143,15 @@ rake db:migrate
 
 <p>Set the following variables in your environment or an initializer.</p>
 
-<div class="highlight highlight-ruby"><pre><span class="no">ENV</span><span class="o">[</span><span class="s2">"INTEL_USERNAME"</span><span class="o">]</span> <span class="o">=</span> <span class="s2">"andrew"</span>
-<span class="no">ENV</span><span class="o">[</span><span class="s2">"INTEL_PASSWORD"</span><span class="o">]</span> <span class="o">=</span> <span class="s2">"secret"</span>
+<div class="highlight highlight-ruby"><pre><span class="no">ENV</span><span class="o">[</span><span class="s2">"SEARCHJOY_USERNAME"</span><span class="o">]</span> <span class="o">=</span> <span class="s2">"andrew"</span>
+<span class="no">ENV</span><span class="o">[</span><span class="s2">"SEARCHJOY_PASSWORD"</span><span class="o">]</span> <span class="o">=</span> <span class="s2">"secret"</span>
 </pre></div>
 
 <h4>
 <a name="devise" class="anchor" href="#devise"><span class="octicon octicon-link"></span></a>Devise</h4>
 
 <div class="highlight highlight-ruby"><pre><span class="n">authenticate</span> <span class="ss">:user</span><span class="p">,</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">user</span><span class="o">|</span> <span class="n">user</span><span class="o">.</span><span class="n">admin?</span> <span class="p">}</span> <span class="k">do</span>
-  <span class="n">mount</span> <span class="ss">Intel</span><span class="p">:</span><span class="ss">:Engine</span><span class="p">,</span> <span class="ss">at</span><span class="p">:</span> <span class="s2">"admin/intel"</span>
+  <span class="n">mount</span> <span class="ss">Searchjoy</span><span class="p">:</span><span class="ss">:Engine</span><span class="p">,</span> <span class="ss">at</span><span class="p">:</span> <span class="s2">"admin/searchjoy"</span>
 <span class="k">end</span>
 </pre></div>
 
@@ -161,9 +161,9 @@ rake db:migrate
 <h4>
 <a name="time-zone" class="anchor" href="#time-zone"><span class="octicon octicon-link"></span></a>Time Zone</h4>
 
-<p>To change the time zone, create an initializer <code>config/initializers/intel.rb</code> with:</p>
+<p>To change the time zone, create an initializer <code>config/initializers/searchjoy.rb</code> with:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="no">Intel</span><span class="o">.</span><span class="n">time_zone</span> <span class="o">=</span> <span class="s2">"Pacific Time (US &amp; Canada)"</span> <span class="c1"># defaults to Time.zone</span>
+<div class="highlight highlight-ruby"><pre><span class="no">Searchjoy</span><span class="o">.</span><span class="n">time_zone</span> <span class="o">=</span> <span class="s2">"Pacific Time (US &amp; Canada)"</span> <span class="c1"># defaults to Time.zone</span>
 </pre></div>
 
 <h4>
@@ -171,7 +171,7 @@ rake db:migrate
 
 <p>Change the number of top searches shown with:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="no">Intel</span><span class="o">.</span><span class="n">top_searches</span> <span class="o">=</span> <span class="mi">500</span> <span class="c1"># defaults to 100</span>
+<div class="highlight highlight-ruby"><pre><span class="no">Searchjoy</span><span class="o">.</span><span class="n">top_searches</span> <span class="o">=</span> <span class="mi">500</span> <span class="c1"># defaults to 100</span>
 </pre></div>
 
 <h4>
@@ -179,7 +179,7 @@ rake db:migrate
 
 <p>Show the conversion name in the live stream.</p>
 
-<div class="highlight highlight-ruby"><pre><span class="no">Intel</span><span class="o">.</span><span class="n">conversion_name</span> <span class="o">=</span> <span class="nb">proc</span><span class="p">{</span><span class="o">|</span><span class="n">model</span><span class="o">|</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span> <span class="p">}</span>
+<div class="highlight highlight-ruby"><pre><span class="no">Searchjoy</span><span class="o">.</span><span class="n">conversion_name</span> <span class="o">=</span> <span class="nb">proc</span><span class="p">{</span><span class="o">|</span><span class="n">model</span><span class="o">|</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span> <span class="p">}</span>
 </pre></div>
 
 <h2>
@@ -195,8 +195,8 @@ rake db:migrate
 <p>Everyone is encouraged to help improve this project. Here are a few ways you can help:</p>
 
 <ul>
-<li><a href="https://github.com/ankane/intel/issues">Report bugs</a></li>
-<li>Fix bugs and <a href="https://github.com/ankane/intel/pulls">submit pull requests</a>
+<li><a href="https://github.com/ankane/searchjoy/issues">Report bugs</a></li>
+<li>Fix bugs and <a href="https://github.com/ankane/searchjoy/pulls">submit pull requests</a>
 </li>
 <li>Write, clarify, or fix documentation</li>
 <li>Suggest or add new feature</li>
